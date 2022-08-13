@@ -2,23 +2,20 @@ import WrongNetworkMessage from '../components/WrongNetworkMessage'
 import ConnectWalletButton from '../components/ConnectWalletButton'
 import TodoList from '../components/TodoList'
 import {useState} from 'react'
-import { TaskContract } from '../config.js'
+import { TaskContractAddress } from '../config.js'
 import TaskAbi from '../../backend/build/contracts/TaskContract.json'
 import { ethers } from "ethers"
 
-/* 
-const tasks = [
-  { id: 0, taskText: 'clean', isDeleted: false }, 
-  { id: 1, taskText: 'food', isDeleted: false }, 
-  { id: 2, taskText: 'water', isDeleted: true }
-]
-*/
+
+
 
 export default function Home() {
 
   const [correctNetwork, setCorrectNetwork] = useState(false)
   const [isUserConnected, setIsUserConnected] = useState(false)
   const [currentAccount, setCurrentAccount] = useState('')
+  const [input, setInput] = useState('')
+  const [tasks, setTasks] = useState('')
 
 
 
@@ -61,6 +58,37 @@ export default function Home() {
   // Add tasks from front-end onto the blockchain
   const addTask = async e => {
     e.preventDefault()
+    let task = {
+      taskText: input,
+      isDeleted: false
+    }
+    try {
+      const {etherum } = window
+      if (etherum) {
+        const provider = new ethers.providers.Web3Provider()
+        const signer = provider.getSigner()
+        const TaskContract = new ethers.Contract(
+          //contract address
+          TaskContractAddress,
+          //contract application binary interface
+          TaskAbi.abi,
+          //signer
+          signer
+        )
+        TaskContract.addTask(task.taskText, task.isDeleted)
+        .then(res => {
+          setTasks=[...tasks, task]
+          console.log('Added task', tasks)
+        })
+        .catch(err => 
+          console.log('Error adding task', err))
+      } else {
+        console.log('No ethereum is detected')
+      } 
+    }
+    catch (error) {
+      console.log(error)
+    }
 
   }
 
