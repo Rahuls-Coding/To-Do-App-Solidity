@@ -1,9 +1,9 @@
 import { IoMdAddCircle } from 'react-icons/io'
 import Task from "./Task"
 
-const TodoList = ({tasks, input, setInput, addTask, deleteTask}) => <div className='w-[70%] py-4 px-9 rounded-[30px] overflow-y-scroll'>
+const TodoList = ({username, tasks, input, setInput, addTask, deleteTask}) => <div className='w-[70%] py-4 px-9 rounded-[30px] overflow-y-scroll'>
   <h2 className='text-4xl bolder text-white pt-10 pb-8'>
-    What&apos;s up, Kevin!
+    What&apos;s up, {username}!
   </h2>
   <div className='py-3 text-white'>TODAY&apos;S TASKS</div>
   <form className='flex items-center justify-center'>

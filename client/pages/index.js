@@ -14,6 +14,8 @@ export default function Home() {
   const [correctNetwork, setCorrectNetwork] = useState(false)
   const [isUserConnected, setIsUserConnected] = useState(false)
   const [currentAccount, setCurrentAccount] = useState('')
+  const [username, setUsername] = useState('')
+  let usernames = []
   const [input, setInput] = useState('')
   const [tasks, setTasks] = useState([])
 
@@ -43,7 +45,19 @@ export default function Home() {
       }
 
       const accounts = await ethereum.request({ method: 'eth_requestAccounts'})
-      console.log('accounts', accounts[0])
+      const account = '' + accounts[0]
+      const accountUser = account.split("")
+      if (usernames.length != 5){
+      let temp = ''
+      for (let i = 0; i < 5; i++) {
+        const usercurrent = temp + accountUser[i]
+        usernames.push(usercurrent)
+      }
+      console.log(usernames)
+      let useraccount = usernames.join("")
+      setUsername(useraccount)
+    }
+
       setCurrentAccount(accounts[0])
       setIsUserConnected(true)
 
@@ -146,7 +160,7 @@ export default function Home() {
   return (
     <div className='h-screen w-screen flex justify-center py-6 bg-image'>
       {!isUserConnected ? <ConnectWalletButton connectWallet={connectWallet} /> :
-        correctNetwork ? <TodoList tasks={tasks} input={input} setInput={setInput} addTask={addTask} deleteTask={deleteTask}/> : <WrongNetworkMessage />}
+        correctNetwork ? <TodoList username={username} tasks={tasks} input={input} setInput={setInput} addTask={addTask} deleteTask={deleteTask}/> : <WrongNetworkMessage />}
     </div>
   )
 }
