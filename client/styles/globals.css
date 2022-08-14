@@ -1,13 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+
+::placeholder{
+  color:black
+}
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 a {
@@ -17,4 +21,10 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.bg-image {
+  background-image: url(https://www.kindacode.com/wp-content/uploads/2022/05/green.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
