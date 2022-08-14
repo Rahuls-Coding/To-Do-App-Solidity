@@ -128,7 +128,7 @@ export default function Home() {
           signer
         )
           
-      const deleteTaskTx =  await TaskContract.deleteTask(key)
+      const deleteTaskTx =  await TaskContract.deleteTask(key, true)
       console.log("deleted Task", deleteTaskTx)
       let allTasks = await TaskContract.getMyTasks()
         setTasks(allTasks)
@@ -146,7 +146,7 @@ export default function Home() {
   return (
     <div className='h-screen w-screen flex justify-center py-6 bg-image'>
       {!isUserConnected ? <ConnectWalletButton connectWallet={connectWallet} /> :
-        correctNetwork ? <TodoList tasks={tasks} input={input} setInput={setInput} addTask={addTask}/> : <WrongNetworkMessage />}
+        correctNetwork ? <TodoList tasks={tasks} input={input} setInput={setInput} addTask={addTask} deleteTask={deleteTask}/> : <WrongNetworkMessage />}
     </div>
   )
 }
